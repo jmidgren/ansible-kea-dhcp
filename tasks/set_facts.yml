@@ -11,6 +11,7 @@
       - mariadb-connector-c
       - socat
       - log4cplus
+      - openrc
     kea_dhcp_hooks_dir: "/usr/lib/kea/hooks"
   when:
     - ansible_distribution == "Alpine"
@@ -133,6 +134,12 @@
     - ansible_os_family == "RedHat"
     - kea_dhcp_version is version('1.9', '>=')
     - kea_dhcp_version is version('1.10', '<')
+
+- name: set_facts | Setting Repo Info (RedHat)
+  set_fact:
+    kea_dhcp_repo_distro_name: "{% if ansible_distribution == 'Fedora' %}fedora{% else %}el{% endif %}"
+  when:
+    - ansible_os_family == "RedHat"
 
 - name: set_facts | Setting Kea Packages (Alpine)
   set_fact:

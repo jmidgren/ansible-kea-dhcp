@@ -5,6 +5,8 @@
     name: "{{ item['name'] }}"
     state: restarted
   become: true
+  throttle: 1
+  #order: reverse_inventory
   loop: "{{ kea_dhcp_services }}"
   when:
     - item['enabled']|bool
